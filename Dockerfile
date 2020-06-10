@@ -11,7 +11,8 @@ RUN    apt-get update \
            gnupg \
            gosu \
            make \
-           perl
+           perl \
+           fonts-arphic-uming fonts-arphic-ukai
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D6BC243565B2087BC3F897C9277A7293F59E4889
 RUN echo "deb http://miktex.org/download/ubuntu bionic universe" | tee /etc/apt/sources.list.d/miktex.list
@@ -26,6 +27,36 @@ RUN    miktexsetup finish \
     && mpm --admin \
            --install amsfonts \
            --install biber-linux-x86_64 \
+           --install standalone \
+           --install iftex \
+           --install etoolbox \
+           --install ifplatform \
+           --install fontspec \
+           --install geometry \
+           --install xcolor \
+           --install titlesec \
+           --install fancyhdr \
+           --install setspace \
+           --install tocbibind \
+           --install biblatex \
+           --install csquotes \
+           --install pdfpages \
+           --install caption \
+           --install placeins \
+           --install eso-pic \
+           --install background \
+           --install everypage \
+           --install multirow \
+           --install colortbl \
+           --install floatrow \
+           --install amsmath \
+           --install siunitx \
+           --install mhchem \
+           --install todonotes \
+           --install listingsutf8 \
+           --install url \
+           --install hyperref \
+           --install cleveref \
     && initexmf --admin --update-fndb
 
 COPY entrypoint.sh /
