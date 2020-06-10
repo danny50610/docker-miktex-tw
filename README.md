@@ -6,11 +6,11 @@ This image allows you to run MiKTeX on any computer that supports Docker.
 
 Get the latest image from the registry:
 
-    docker pull miktex/miktex
+    docker pull danny50610/docker-miktex-tw
 
 or build it yourself:
 
-    docker build --tag miktex/miktex .
+    docker build --tag danny50610/docker-miktex-tw .
 
 ## Using the image
 
@@ -51,12 +51,28 @@ This volume will be used to mount the the container directory
 `/miktex/.miktex` in subsequent runs.
 
 Provided that your main input file is located in the current working
-directory, you can run `pdflatex` as follows:
+directory, you can run command as follows:
 
     docker run --rm -ti \
       -v miktex:/miktex/.miktex \
       -v $(pwd):/miktex/work \
       -e MIKTEX_GID=$(id -g) \
       -e MIKTEX_UID=$(id -u) \
-      miktex/miktex \
-      pdflatex main.tex
+      danny50610/docker-miktex-tw \
+      latexmk -xelatex main.tex
+
+### .gitlab-ci.yml Example
+```
+build:
+  image: danny50610/docker-miktex-tw
+  cache:
+    key: "$CI_COMMIT_REF_NAME-$CI_JOB_NAME"
+    paths:
+      - .miktex
+  script: 
+    - export MIKTEX_USERINSTALL=$PWD/.miktex/texmfs/install
+    - latexmk -xelatex main.tex
+  artifacts:
+    paths:
+      - 'main.pdf'
+```
