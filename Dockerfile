@@ -23,6 +23,7 @@ RUN    apt-get update \
 
 RUN    miktexsetup finish \
     && initexmf --admin --set-config-value=[MPM]AutoInstall=1 \
+    && mpm --admin --set-repository=https://ftp.yz.yamagata-u.ac.jp/pub/CTAN/systems/win32/miktex/tm/packages/ \
     && mpm --admin --update-db \
     && mpm --admin \
            --install amsfonts \
